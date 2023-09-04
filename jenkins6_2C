@@ -1,0 +1,81 @@
+pipeline{
+    agent any
+    environment {
+        BUILD_AUTOMATIION_TOOL="Maven, Gradle"
+        TESTING_ENVIRONMENT="TestEnv"
+        PRODUCTION_SERVER="Amazon_EC2_Instance"
+    }
+
+    stages{
+        stage('Build') {
+            steps {
+                echo "compile and package code using build automation tools: $BUILD_AUTOMATIION_TOOL"
+            }
+        }
+
+        stage('Unit and Integration Tests') {
+            steps {
+                echo "unit tests using Selenium to ensure code functions as expected"
+                echo "run integration tests using Selenium to ensure the different components of the application work together as expected"
+            }
+            post {
+                success {
+                    mail to: "carissawws@gmail.com",
+                    subject: "Build Status Email",
+                    body: "Build was successful!"
+                    attachLog: true
+                }
+                failure {
+                    mail to: "carissawws@gmail.com",
+                    subject: "Build Status Email",
+                    body: "Build was failed!"
+                    attachLog: true
+                }
+            }
+        }
+
+        stage('Code Analysis') {
+            steps {
+                echo "analyse the code and ensure the quality of the code using Sonarqube"
+            }
+        }
+
+        stage('Security Scan') {
+            steps {
+                echo "perform security scan on the code using Probely Security Scanner to identify any vulnerabilities"
+            }
+            post {
+                success {
+                    mail to: "carissawws@gmail.com",
+                    subject: "Security Scan Email",
+                    body: "Security Scan was successful!"
+                    attachLog: true
+                }
+                failure {
+                    mail to: "carissawws@gmail.com",
+                    subject: "Security Scan Email",
+                    body: "Security Scan was failed!"
+                    attachLog: true
+                }
+            }
+        }
+
+        stage('Deploy to Staging') {
+            steps {
+                echo "deploy the application to staging server $PRODUCTION_SERVER"
+            }
+        }
+
+        stage('Integration Tests on Staging') {
+            steps {
+                echo "run integration tests on staging enviornment to ensure the applicatin functions as expected in a production-like environment"
+            }
+        }
+
+        stage('Deploy to Production') {
+            steps {
+                echo "deploy the application to $PRODUCTION_SERVER"
+            }
+        }
+    }
+}
