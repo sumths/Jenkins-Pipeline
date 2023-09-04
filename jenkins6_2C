@@ -22,14 +22,14 @@ pipeline{
                 success {
                     mail to: "carissawws@gmail.com",
                     subject: "Build Status Email",
-                    body: "Build was successful!"
-                    attachLog: true
+                    body: "Build was successful! Build log attached."
+                    // attachLog: true
                 }
                 failure {
                     mail to: "carissawws@gmail.com",
                     subject: "Build Status Email",
-                    body: "Build was failed!"
-                    attachLog: true
+                    body: "Build was failed! Build log attached."
+                    // attachLog: true
                 }
             }
         }
@@ -48,14 +48,14 @@ pipeline{
                 success {
                     mail to: "carissawws@gmail.com",
                     subject: "Security Scan Email",
-                    body: "Security Scan was successful!"
-                    attachLog: true
+                    body: "Security Scan was successful! Security scan log attached."
+                    // attachLog: true
                 }
                 failure {
                     mail to: "carissawws@gmail.com",
                     subject: "Security Scan Email",
-                    body: "Security Scan was failed!"
-                    attachLog: true
+                    body: "Security Scan was failed! Security scan log attached."
+                    // attachLog: true
                 }
             }
         }
